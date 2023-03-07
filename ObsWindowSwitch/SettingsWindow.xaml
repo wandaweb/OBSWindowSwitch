@@ -1,0 +1,19 @@
+﻿<Window x:Class="ObsWindowSwitch.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ObsWindowSwitch"
+        mc:Ignorable="d"
+        Title="Settings" Height="300" Width="500">
+    <Grid>
+        <Label Content="OBS Websocket URL" HorizontalAlignment="Left" Margin="49,41,0,0" VerticalAlignment="Top"/>
+        <Label Content="Scene Name" HorizontalAlignment="Left" Margin="49,0,0,0" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Margin="210,45,0,0" TextWrapping="Wrap" Text="ws://localhost:4455" VerticalAlignment="Top" Width="225" Name="WebsocketText"/>
+        <TextBox HorizontalAlignment="Left" Margin="210,0,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="225" Name ="SceneNameText"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="406,186,0,0" VerticalAlignment="Top" Click="Save_Button_Click"/>
+        <Label Content="Password" HorizontalAlignment="Left" Margin="49,88,0,0" VerticalAlignment="Top"/>
+        <PasswordBox HorizontalAlignment="Left" Margin="210,92,0,0" VerticalAlignment="Top" Width="225" Name="PasswordText"/>
+
+    </Grid>
+</Window>

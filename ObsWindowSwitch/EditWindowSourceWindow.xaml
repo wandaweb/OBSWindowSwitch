@@ -1,0 +1,29 @@
+﻿<Window x:Class="ObsWindowSwitch.EditWindowSourceWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ObsWindowSwitch"
+        mc:Ignorable="d"
+        Title="EditWindowSource" Height="450" Width="800"
+        Name="EditWindow"
+        MouseDown="Grid_MouseDown">
+    <Grid Name="Grid" Focusable="True" MouseDown="Grid_MouseDown">
+        <TextBox HorizontalAlignment="Left" Margin="168,40,0,0" TextWrapping="Wrap" Text="Process Name" VerticalAlignment="Top" Width="120" 
+                 Name ="ProcessName" 
+                 TextChanged="ProcessName_TextChanged"
+                 GotFocus="ProcessName_GotFocus"/>
+        <Label Content="Process Name" HorizontalAlignment="Left" Margin="50,36,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Margin="168,84,0,0" TextWrapping="Wrap" Text="OBS Source Name" VerticalAlignment="Top" Width="120" 
+                 Name ="OBSName" 
+                 TextChanged="OBSName_TextChanged"
+                 GotFocus="OBSName_GotFocus"/>
+        <Label Content="Source Name" HorizontalAlignment="Left" Margin="50,80,0,0" VerticalAlignment="Top"/>
+        <CheckBox Content="Always Visible" HorizontalAlignment="Left" Margin="168,131,0,0" VerticalAlignment="Top" Name="AlwaysVisible"/>
+        <Button Content="Save" HorizontalAlignment="Left" Margin="62,197,0,0" VerticalAlignment="Top" Height="20" Width="61" Click="Button_Click" />
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="168,58,481,212" Name="ProcessListBox" Visibility="Hidden"/>
+        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="168,102,480,175" Name="ObsSourceListBox" Visibility="Hidden"/>
+
+
+    </Grid>
+</Window>

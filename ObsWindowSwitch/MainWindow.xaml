@@ -1,0 +1,20 @@
+﻿<Window x:Class="ObsWindowSwitch.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ObsWindowSwitch"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Button Margin="414,23,216,0" VerticalAlignment="Top" Click="Button_Click" Height="28">Start</Button>
+        <Button Margin="35,23,595,0" VerticalAlignment="Top" Click="Add_Window_Button_Click" Height="28">Add Window</Button>
+        <TextBlock x:Name="Info" HorizontalAlignment="Left" Margin="625,29,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="7.689,-1.894"/>
+        <ScrollViewer Margin="0,56,0,0">
+            <StackPanel Name ="StackPanel" Orientation="Vertical"/>
+
+
+        </ScrollViewer>
+        <Button Content="Settings" Click="Settings_Button_Click" HorizontalAlignment="Left" Margin="239,23,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.469,3.324" Height="28" Width="142"/>
+    </Grid>
+</Window>
