@@ -8,10 +8,6 @@ namespace ObsWindowSwitch.Models
 {
     public class OBSParams
     {
-        public string WebsocketUrl { get; set; }
-        public string SceneName { get; set; }
-        public string WebsocketPassword { get; set; }
-
         public OBSParams(string websocketUrl, string password, string sceneName)
         {
             WebsocketUrl = websocketUrl;
@@ -25,5 +21,9 @@ namespace ObsWindowSwitch.Models
             WebsocketPassword = "";
             SceneName = "Default";
         }
+
+        public string WebsocketUrl { get; set; }
+        public string SceneName { get; set; }
+        public string WebsocketPassword { get; set; }
     }
 }

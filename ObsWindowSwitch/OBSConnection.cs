@@ -72,6 +72,7 @@ namespace ObsWindowSwitch
 
         public List<string> GetAllSceneItems()
         {
+            if(!_connected) return new List<string>();
             var sceneItems = _obs.GetSceneItemList(_sceneName);
             List<string> itemNames = new List<string>();
             foreach(var item in sceneItems)
