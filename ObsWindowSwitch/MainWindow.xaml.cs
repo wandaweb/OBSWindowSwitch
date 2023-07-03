@@ -58,18 +58,40 @@ namespace ObsWindowSwitch
 
         private void LoadWindowSources()
         {
-            string text = File.ReadAllText(CONFIG_FILE);
-            var windows = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, SharedWindow>>(text);
-            StreamWindows.SetWindows(windows);
+            if (File.Exists(CONFIG_FILE))
+            {
+                try
+                {
+                    string text = File.ReadAllText(CONFIG_FILE);
+                    var windows = JsonSerializer.Deserialize<ConcurrentDictionary<Guid, SharedWindow>>(text);
+                    StreamWindows.SetWindows(windows);
+                } catch (Exception ex)
+                {
+                    // TODO: notify about corrupted config file
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            
         }
 
         private void LoadOBSSettings()
         {
-            string text = File.ReadAllText(OBS_SETTINGS_FILE);
-            OBSParams settings = JsonSerializer.Deserialize<OBSParams>(text);
-            OBSSettings.GetSettings().WebsocketUrl = settings.WebsocketUrl;
-            OBSSettings.GetSettings().WebsocketPassword = settings.WebsocketPassword;
-            OBSSettings.GetSettings().SceneName = settings.SceneName;
+            if (File.Exists(OBS_SETTINGS_FILE))
+            {
+                try
+                {
+                    string text = File.ReadAllText(OBS_SETTINGS_FILE);
+                    OBSParams settings = JsonSerializer.Deserialize<OBSParams>(text);
+                    OBSSettings.GetSettings().WebsocketUrl = settings.WebsocketUrl;
+                    OBSSettings.GetSettings().WebsocketPassword = settings.WebsocketPassword;
+                    OBSSettings.GetSettings().SceneName = settings.SceneName;
+                }
+                catch (Exception ex)
+                {
+                    // TODO: notify about corrupted obs settings config file
+                    Console.WriteLine(ex.ToString());
+                }
+            }
         }
 
         public void RefreshWindowSources()
