@@ -48,6 +48,7 @@ namespace ObsWindowSwitch
             _obsSourceListBox.LostFocus += _obsSourceListBox_LostFocus;
             _obsSourceListBox.SelectionChanged += _obsSourceListBox_SelectionChanged;
             _processList = _processFinder.ListAllProcesses();
+            obs.FetchSceneInfo();
             _sceneItemList = _obs.GetAllSceneItems();
             _grid = FindName("Grid") as Grid ?? new Grid();
             win = null;

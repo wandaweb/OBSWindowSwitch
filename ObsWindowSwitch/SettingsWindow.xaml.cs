@@ -52,6 +52,7 @@ namespace ObsWindowSwitch
             settings.SceneName = sceneName;
             settings.WebsocketPassword = password;
             ((MainWindow)Owner).UpdateOBSSettingsFile();
+            ((MainWindow)Owner).UpdateConnection();
             Close();
         }
     }

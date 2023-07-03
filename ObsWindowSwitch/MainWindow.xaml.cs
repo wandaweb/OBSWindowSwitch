@@ -36,6 +36,7 @@ namespace ObsWindowSwitch
         private TextBlock _infoText;
         private StackPanel _stackPanel;
         private OBSConnection _connection;
+        private OBSParams _settings;
         
         private WindowTracker _windowTracker;
 
@@ -51,8 +52,8 @@ namespace ObsWindowSwitch
             RefreshWindowSources();
             LoadOBSSettings();
 
-            var settings = OBSSettings.GetSettings();
-            _connection = new OBSConnection(settings.WebsocketUrl, settings.WebsocketPassword);
+            _settings = OBSSettings.GetSettings();
+            _connection = new OBSConnection(_settings.WebsocketUrl, _settings.WebsocketPassword, _settings.SceneName);
 
         }
 
@@ -68,7 +69,7 @@ namespace ObsWindowSwitch
                 } catch (Exception ex)
                 {
                     // TODO: notify about corrupted config file
-                    Console.WriteLine(ex.ToString());
+                    Debug.WriteLine(ex.ToString());
                 }
             }
             
@@ -89,7 +90,7 @@ namespace ObsWindowSwitch
                 catch (Exception ex)
                 {
                     // TODO: notify about corrupted obs settings config file
-                    Console.WriteLine(ex.ToString());
+                    Debug.WriteLine(ex.ToString());
                 }
             }
         }
@@ -146,6 +147,11 @@ namespace ObsWindowSwitch
         {
             var json = JsonSerializer.Serialize(OBSSettings.GetSettings());
             File.WriteAllTextAsync("myObsSettings.json", json);
+        }
+
+        public void UpdateConnection()
+        {
+            _connection = new OBSConnection(_settings.WebsocketUrl, _settings.WebsocketPassword, _settings.SceneName);
         }
 
         private void EditWindowSource(SharedWindow win)

@@ -18,19 +18,21 @@ namespace ObsWindowSwitch
         private SharedWindow _initialWindow;
         private string _sceneName;
 
-        public OBSConnection(string url= "ws://localhost:4455", string password="")
+        public OBSConnection(string url= "ws://localhost:4455", string password="", string sceneName="Default")
         {
             _url = url;
             _password = password;
             _obs = new OBSWebsocket();
             _connected = false;
             _initialWindow = new SharedWindow { Title = ""};
+            _sceneName = sceneName;
             Connect();
         }
 
         public void Connect()
         {
             _obs.ConnectAsync(_url, _password);
+            Debug.WriteLine("Is connected? " + _obs.IsConnected);
             _obs.Connected += OnConnected;
         }
 
@@ -40,39 +42,45 @@ namespace ObsWindowSwitch
 
             Debug.WriteLine("Socket connected");
 
-            // get active scene name
-            _sceneName = _obs.GetCurrentProgramScene();
 
-            // add initial scene items
+            FetchSceneInfo();
+        }
 
-            foreach (var win in StreamWindows.GetWindows())
+        public void FetchSceneInfo()
+        {
+            if (_obs.IsConnected)
             {
-                Debug.WriteLine(win.Value.Title);
-            }
+                Debug.WriteLine("Connected");
 
-            foreach (var pair in StreamWindows.GetWindows())
-            {
-                var win = pair.Value;
-                try
+                // get active scene name
+                _sceneName = _obs.GetCurrentProgramScene();
+                Debug.WriteLine("Scene: " + _sceneName);
+
+                // add initial scene items
+
+                foreach (var win in StreamWindows.GetWindows())
                 {
-                    win.ObsSource = _obs.GetSceneItemId(_sceneName, win.ObsSourceName, 0);
-                } catch (Exception ex)
-                {
-                    // TODO: Send this to user
-                    Debug.WriteLine(ex.Message);
+                    Debug.WriteLine(win.Value.Title);
                 }
-                Debug.WriteLine(win.ObsSourceName, " id is ", win.ObsSource);
+
+                foreach (var pair in StreamWindows.GetWindows())
+                {
+                    var win = pair.Value;
+                    Debug.WriteLine("getting scene item id for " + win.ObsSourceName);
+                    win.ObsSource = _obs.GetSceneItemId(_sceneName, win.ObsSourceName, 0);
+                    Debug.WriteLine(win.ObsSource);
+                    Debug.WriteLine(win.ObsSourceName, " id is ", win.ObsSource);
+                }
+
+                // switch to the foreground window
+                if (_initialWindow.Title != "")
+                    SwitchTo(_initialWindow);
             }
-
-            // switch to the foreground window
-            if (_initialWindow.Title != "")
-                SwitchTo(_initialWindow);
-
         }
 
         public List<string> GetAllSceneItems()
         {
-            if(!_connected) return new List<string>();
+            if (!_obs.IsConnected) return new List<string>();
             var sceneItems = _obs.GetSceneItemList(_sceneName);
             List<string> itemNames = new List<string>();
             foreach(var item in sceneItems)
@@ -84,7 +92,7 @@ namespace ObsWindowSwitch
 
         public void SwitchTo(SharedWindow window)
         {
-            if (_connected)
+            if (_obs.IsConnected)
             {
                 Debug.WriteLine("window count: " +StreamWindows.GetWindows().Count);
                 // hide other window items
@@ -123,14 +131,6 @@ namespace ObsWindowSwitch
                 // is established
                 _initialWindow = window;
                 Debug.WriteLine("not connected");
-            }
-        }
-
-        public void AddSceneItem(SharedWindow window)
-        {
-            if (_connected)
-            {
-
             }
         }
     }
